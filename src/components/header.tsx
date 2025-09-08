@@ -56,7 +56,7 @@ export const Header = ({
   };
 
   return (
-    <header className="bg-gradient-primary text-primary-foreground shadow-header sticky top-0 z-50">
+    <header className="bg-primary text-primary-foreground shadow-header sticky top-0 z-50">
       {/* Top bar */}
       <div className="bg-primary/90 text-xs py-1 hidden md:block">
         <div className="container mx-auto px-4 flex justify-between items-center">
@@ -109,9 +109,11 @@ export const Header = ({
             </Button>
             <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20" onClick={onCartClick}>
               <ShoppingCart className="h-4 w-4 lg:h-5 lg:w-5" />
-              <span className="absolute -top-1 -right-1 lg:-top-2 lg:-right-2 bg-sale text-sale-foreground text-xs rounded-full w-4 h-4 lg:w-5 lg:h-5 flex items-center justify-center">
-                {cartItemCount}
-              </span>
+              {cartItemCount > 0 && (
+                <span className="absolute -top-1 -right-1 lg:-top-2 lg:-right-2 bg-sale text-sale-foreground text-xs rounded-full w-4 h-4 lg:w-5 lg:h-5 flex items-center justify-center">
+                  {cartItemCount}
+                </span>
+              )}
             </Button>
           </div>
         </div>
