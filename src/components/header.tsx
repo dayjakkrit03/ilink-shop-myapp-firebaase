@@ -58,8 +58,8 @@ export const Header = ({
   return (
     <header className="bg-primary text-primary-foreground shadow-header sticky top-0 z-50">
       {/* Top bar */}
-      <div className="bg-primary/90 text-xs py-1 hidden md:block">
-        <div className="container mx-auto px-4 flex justify-between items-center">
+      <div className="bg-black/10 text-xs py-1 hidden md:block">
+        <div className="w-full max-w-screen-2xl mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <Link href="/" className="hover:text-white/80 transition-colors">หน้าแรก</Link>
             <span>ร้านค้าของเรา</span>
@@ -77,7 +77,7 @@ export const Header = ({
       </div>
 
       {/* Main header */}
-      <div className="container mx-auto px-4 py-4">
+      <div className="w-full max-w-screen-2xl mx-auto px-4 py-4">
         <div className="flex items-center gap-4 lg:gap-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 lg:gap-3">
@@ -121,13 +121,13 @@ export const Header = ({
 
       {/* Navigation */}
       <div className="bg-white text-primary border-t border-primary/10">
-        <div className="container mx-auto px-4">
-          <nav className="flex items-center gap-2 md:gap-4 lg:gap-8 py-3 text-sm">
+        <div className="w-full max-w-screen-2xl mx-auto px-4">
+          <nav className="flex items-center gap-2 md:gap-4 lg:gap-8 py-3">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="sm" className="text-primary hover:bg-primary/10 shrink-0">
                   <Menu className="h-4 w-4 mr-1" />
-                  <span className="hidden sm:inline">หมวดหมู่สินค้า</span>
+                  <span className="hidden sm:inline font-semibold">หมวดหมู่สินค้า</span>
                   <span className="sm:hidden text-xs">หมวดหมู่</span>
                   <ChevronDown className="h-3 w-3 ml-1" />
                 </Button>
