@@ -110,7 +110,7 @@ export const Header = ({
             <Button variant="ghost" size="sm" className="relative text-white hover:bg-white/20" onClick={onCartClick}>
               <ShoppingCart className="h-4 w-4 lg:h-5 lg:w-5" />
               {cartItemCount > 0 && (
-                <span className="absolute -top-1 -right-1 lg:-top-2 lg:-right-2 bg-sale text-sale-foreground text-xs rounded-full w-4 h-4 lg:w-5 lg:h-5 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 lg:-top-2 lg:-right-2 bg-destructive text-destructive-foreground text-xs rounded-full w-4 h-4 lg:w-5 lg:h-5 flex items-center justify-center">
                   {cartItemCount}
                 </span>
               )}
@@ -160,7 +160,7 @@ export const Header = ({
               <button onClick={() => handleCategoryClick("DATA CENTER System")} className="hover:text-primary/80 transition-colors whitespace-nowrap text-sm">DATA CENTER</button>
               <button onClick={() => handleCategoryClick("NETWORKING System")} className="hover:text-primary/80 transition-colors whitespace-nowrap text-sm">NETWORKING</button>
             </div>
-            <span className="text-sale font-semibold ml-auto shrink-0 text-xs sm:text-sm cursor-pointer hover:text-sale/80 transition-colors" onClick={handleClearanceSaleClick}>
+            <span className="text-destructive font-semibold ml-auto shrink-0 text-xs sm:text-sm cursor-pointer hover:text-destructive/80 transition-colors" onClick={handleClearanceSaleClick}>
               Clearance Sale ลดสูงสุด 90%
             </span>
           </nav>
