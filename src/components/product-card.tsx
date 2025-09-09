@@ -200,9 +200,7 @@ export const ProductCard = ({
         )}
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <Button
-            variant="secondary"
-            size="sm"
-            className="opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
+            className="bg-gradient-primary text-primary-foreground opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
           >
             ดูรายละเอียด
           </Button>
@@ -239,7 +237,6 @@ export const ProductCard = ({
       <div className="p-3 sm:p-4 pt-0">
         <Button
           className="w-full group-hover:shadow-glow transition-all duration-300"
-          size="sm"
           onClick={(e) => {
             e.stopPropagation();
             onAddToCart?.();
