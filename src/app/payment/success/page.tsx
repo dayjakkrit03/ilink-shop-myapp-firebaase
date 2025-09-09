@@ -25,6 +25,7 @@ export default function PaymentSuccessPage() {
 
   useEffect(() => {
     // If payment data is already in state, do nothing.
+    // This prevents re-running logic on subsequent renders.
     if (paymentData) {
       return;
     }
@@ -32,10 +33,11 @@ export default function PaymentSuccessPage() {
     const storedData = sessionStorage.getItem('paymentData');
     if (storedData) {
       setPaymentData(JSON.parse(storedData));
-      // Clear the data after reading to prevent reuse
+      // Clear the data after reading to prevent reuse on page refresh.
       sessionStorage.removeItem('paymentData');
     } else {
-      // If no payment data is in storage AND not in state, redirect to home.
+      // If no data in storage AND no data in state, it means the user landed here directly.
+      // So, we redirect them to the homepage.
       router.replace("/");
     }
   }, [router, paymentData]);
