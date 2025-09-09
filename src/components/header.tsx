@@ -81,7 +81,7 @@ export const Header = ({
         <div className="flex items-center gap-4 lg:gap-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 lg:gap-3">
-            <Image src="/lovable-uploads/445c1f0e-86bc-45a1-a47c-fe9bd739d132.png" alt="Interlink Logo" width={40} height={40} className="h-8 lg:h-10 w-auto hover:scale-105 transition-transform" />
+            <Image src="/lovable-uploads/445c1f0e-86bc-45a1-a47c-febd739d132.png" alt="Interlink Logo" width={40} height={40} className="h-8 lg:h-10 w-auto hover:scale-105 transition-transform" />
             <div className="text-white font-bold text-lg lg:text-xl drop-shadow-lg hidden sm:block hover:text-white/90 transition-colors" style={{
               textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
             }}>
@@ -127,7 +127,7 @@ export const Header = ({
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="sm" className="text-primary hover:bg-primary/10 shrink-0">
                   <Menu className="h-4 w-4 mr-1" />
-                  <span className="hidden sm:inline font-semibold">หมวดหมู่สินค้า</span>
+                  <span className="hidden sm:inline font-semibold text-base">หมวดหมู่สินค้า</span>
                   <span className="sm:hidden text-xs">หมวดหมู่</span>
                   <ChevronDown className="h-3 w-3 ml-1" />
                 </Button>
@@ -147,18 +147,12 @@ export const Header = ({
                 <DropdownMenuItem className="text-primary hover:bg-primary/10 cursor-pointer" onClick={() => handleCategoryClick("LINK RACK")}>LINK RACK</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <div className="hidden xl:flex items-center gap-6">
-              <button onClick={() => handleCategoryClick("LAN (UTP) System")} className="hover:text-primary/80 transition-colors whitespace-nowrap text-sm">LAN (UTP)</button>
-              <button onClick={() => handleCategoryClick("FIBER OPTIC System")} className="hover:text-primary/80 transition-colors whitespace-nowrap text-sm">FIBER OPTIC</button>
-              <button onClick={() => handleCategoryClick("DATA CENTER System")} className="hover:text-primary/80 transition-colors whitespace-nowrap text-sm">DATA CENTER</button>
-              <button onClick={() => handleCategoryClick("COAXIAL (RG) System")} className="hover:text-primary/80 transition-colors whitespace-nowrap text-sm">COAXIAL (RG)</button>
-              <button onClick={() => handleCategoryClick("NETWORKING System")} className="hover:text-primary/80 transition-colors whitespace-nowrap text-sm">NETWORKING</button>
-            </div>
-            <div className="hidden lg:flex xl:hidden items-center gap-4">
-              <button onClick={() => handleCategoryClick("LAN (UTP) System")} className="hover:text-primary/80 transition-colors whitespace-nowrap text-sm">LAN</button>
-              <button onClick={() => handleCategoryClick("FIBER OPTIC System")} className="hover:text-primary/80 transition-colors whitespace-nowrap text-sm">FIBER</button>
-              <button onClick={() => handleCategoryClick("DATA CENTER System")} className="hover:text-primary/80 transition-colors whitespace-nowrap text-sm">DATA CENTER</button>
-              <button onClick={() => handleCategoryClick("NETWORKING System")} className="hover:text-primary/80 transition-colors whitespace-nowrap text-sm">NETWORKING</button>
+            <div className="hidden lg:flex items-center gap-4 xl:gap-6">
+              <Link href="/" className="hover:text-primary/80 transition-colors whitespace-nowrap text-sm font-medium">หน้าแรก</Link>
+              <Link href="/products?tag=new" className="hover:text-primary/80 transition-colors whitespace-nowrap text-sm font-medium">สินค้าใหม่</Link>
+              <Link href="/products?tag=sale" className="hover:text-primary/80 transition-colors whitespace-nowrap text-sm font-medium">โปรโมชั่น</Link>
+              <Link href="/about" className="hover:text-primary/80 transition-colors whitespace-nowrap text-sm font-medium">เกี่ยวกับเรา</Link>
+              <Link href="/contact" className="hover:text-primary/80 transition-colors whitespace-nowrap text-sm font-medium">ติดต่อเรา</Link>
             </div>
             <span className="text-destructive font-semibold ml-auto shrink-0 text-xs sm:text-sm cursor-pointer hover:text-destructive/80 transition-colors" onClick={handleClearanceSaleClick}>
               Clearance Sale ลดสูงสุด 90%
