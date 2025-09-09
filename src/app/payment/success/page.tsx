@@ -24,16 +24,21 @@ export default function PaymentSuccessPage() {
   const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
 
   useEffect(() => {
+    // If payment data is already in state, do nothing.
+    if (paymentData) {
+      return;
+    }
+
     const storedData = sessionStorage.getItem('paymentData');
     if (storedData) {
       setPaymentData(JSON.parse(storedData));
       // Clear the data after reading to prevent reuse
       sessionStorage.removeItem('paymentData');
     } else {
-      // If no payment data, redirect to home
+      // If no payment data is in storage AND not in state, redirect to home.
       router.replace("/");
     }
-  }, [router]);
+  }, [router, paymentData]);
 
   const formatDate = (daysFromNow: number) => {
     const date = new Date();
