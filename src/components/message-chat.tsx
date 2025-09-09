@@ -5,6 +5,8 @@ import { MessageCircle, Send, Gift, ShoppingBag, Menu, ChevronDown } from "lucid
 import {
   Sheet,
   SheetContent,
+  SheetHeader,
+  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -154,12 +156,12 @@ export const MessageChat = () => {
       
       <SheetContent side="right" className="w-full sm:w-[500px] md:w-[700px] lg:w-[800px] sm:max-w-[90vw] p-0 flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b bg-background">
-          <div className="flex items-center gap-2">
+        <SheetHeader className="p-4 border-b">
+          <SheetTitle className="flex items-center gap-2">
             <MessageCircle className="h-5 w-5" />
-            <span className="font-semibold">Messages</span>
-          </div>
-        </div>
+            Messages
+          </SheetTitle>
+        </SheetHeader>
         
         <div className="flex flex-1 overflow-hidden">
           {/* Left Column - Conversation List - Hidden on mobile */}
