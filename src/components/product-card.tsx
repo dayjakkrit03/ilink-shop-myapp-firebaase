@@ -72,7 +72,7 @@ export const ProductCard = ({
   if (viewMode === "list") {
     return (
       <Card
-        className="hover:shadow-card-hover transition-all duration-300 overflow-hidden group cursor-pointer hover:-translate-y-1 animate-fade-in flex gap-4 p-4 w-full"
+        className="hover:shadow-card-hover transition-all duration-300 overflow-hidden group cursor-pointer hover:-translate-y-1 flex gap-4 p-4 w-full"
         onClick={handleProductClick}
       >
         <div className="relative w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 overflow-hidden bg-muted/30 rounded-lg flex-shrink-0">
@@ -161,7 +161,7 @@ export const ProductCard = ({
   // 🟦 Grid View
   return (
     <Card
-      className="overflow-hidden transition-all duration-300 group cursor-pointer hover:-translate-y-1 animate-fade-in h-full flex flex-col"
+      className="overflow-hidden transition-all duration-300 group cursor-pointer hover:-translate-y-1 h-full flex flex-col"
       onClick={handleProductClick}
     >
       <div className="relative aspect-square overflow-hidden bg-muted/30">

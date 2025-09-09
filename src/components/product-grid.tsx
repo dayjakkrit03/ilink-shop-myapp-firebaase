@@ -110,14 +110,8 @@ export const ProductGrid = ({ onAddToCart }: ProductGridProps) => {
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
-          {products.map((product, index) => (
-            <div
-              key={product.id}
-              className="opacity-0 animate-fade-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <ProductCard {...product} onAddToCart={onAddToCart} />
-            </div>
+          {products.map((product) => (
+            <ProductCard key={product.id} {...product} onAddToCart={onAddToCart} />
           ))}
         </div>
       </div>
