@@ -218,9 +218,26 @@ export default function CheckoutPage() {
   const handleSaveInvoiceInfo = () => setIsInvoiceSheetOpen(false);
 
   const handlePlaceOrder = () => {
-    if (paymentMethod === 'card') router.push('/payment/card');
-    else if (paymentMethod === 'qr') router.push('/payment/qr');
-    else router.push('/payment/card');
+    const paymentData = {
+      amount: total,
+      orderId: `ORDER-${Date.now()}`,
+      items: checkoutItems,
+      subtotal: subtotal,
+      shippingFee: shippingFee,
+      shippingDiscount: 65,
+      voucherDiscount: voucherDiscount,
+      appliedVouchers: appliedVouchers
+    };
+
+    sessionStorage.setItem('paymentData', JSON.stringify(paymentData));
+
+    if (paymentMethod === 'card') {
+      router.push('/payment/card');
+    } else if (paymentMethod === 'qr') {
+      router.push('/payment/qr');
+    } else {
+      router.push('/payment/card');
+    }
   };
 
   const getPaymentMethodInfo = (method: string) => {
