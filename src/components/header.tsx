@@ -81,7 +81,7 @@ export const Header = ({
         <div className="flex items-center gap-4 lg:gap-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 lg:gap-3">
-            <Image src="/assets/interlink-logo.png" alt="Interlink Logo" width={150} height={50} className="h-8 lg:h-10 w-auto hover:scale-105 transition-transform brightness-0 invert" />
+            <Image src="/assets/interlink-logo.png" alt="Interlink Logo" width={150} height={50} className="h-8 lg:h-10 w-auto hover:scale-105 transition-transform" />
             <div className="text-white font-bold text-lg lg:text-xl drop-shadow-lg hidden sm:block hover:text-white/90 transition-colors" style={{
               textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
             }}>
