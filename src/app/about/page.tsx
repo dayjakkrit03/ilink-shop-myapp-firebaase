@@ -61,7 +61,7 @@ export default function AboutPage() {
               </div>
               <div>
                 <Image 
-                  src="/pasted-image-2025-09-09T08-01-15-948Z-2.png" 
+                  src="/assets/image_about.webp" 
                   alt="Interlink Product Showcase" 
                   width={600} 
                   height={400} 
