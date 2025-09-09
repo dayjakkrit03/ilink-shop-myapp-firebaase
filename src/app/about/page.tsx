@@ -61,8 +61,8 @@ export default function AboutPage() {
               </div>
               <div>
                 <Image 
-                  src="/assets/server-rack-19inch.jpg" 
-                  alt="Networking Equipment Rack" 
+                  src="/pasted-image-2025-09-09T08-01-15-948Z-2.png" 
+                  alt="Interlink Product Showcase" 
                   width={600} 
                   height={400} 
                   className="rounded-lg shadow-card-hover object-cover w-full h-full"
