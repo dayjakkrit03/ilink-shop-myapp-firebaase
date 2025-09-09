@@ -173,7 +173,7 @@ export const ProductCard = ({
           className="object-cover group-hover:scale-110 transition-transform duration-500"
         />
         {(discount && showDiscount) && (
-          <Badge className="absolute top-2 left-2 bg-destructive text-destructive-foreground px-2 py-1 text-xs font-bold shadow-soft rounded-md backdrop-blur-sm bg-opacity-90">
+          <Badge className="absolute top-2 left-2 bg-destructive text-destructive-foreground px-2 py-1 text-xs font-bold shadow-soft rounded-md">
             -{discount}%
           </Badge>
         )}
