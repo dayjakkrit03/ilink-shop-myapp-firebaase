@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "ilink-shop",
   description: "Interlink Shop - Your one-stop shop for networking equipment.",
   icons: {
-    icon: "/globe.svg",
+    icon: "/favicon.svg",
   },
 };
 
