@@ -56,9 +56,8 @@ export const HeroSection = ({ items = [] }: HeroSectionProps) => {
         <Image
           src="/assets/hero-banner.jpg"
           alt="Hero Banner"
-          layout="fill"
-          objectFit="cover"
-          className="mix-blend-overlay"
+          fill
+          className="object-cover mix-blend-overlay"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/60 to-secondary/60">
           <div className="container mx-auto px-4 h-full flex items-center">
@@ -126,8 +125,8 @@ export const HeroSection = ({ items = [] }: HeroSectionProps) => {
                       <Image
                         src={img}
                         alt={b.title}
-                        layout="fill"
-                        objectFit="cover"
+                        fill
+                        className="object-cover"
                       />
                       {badge && (
                         <span className="absolute top-2 left-2 text-xs px-2 py-1 rounded bg-black/70 text-white z-10">
