@@ -1,46 +1,43 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Mail, Package } from "lucide-react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 
-interface PaymentData {
-  amount: number;
-  orderId: string;
-  items: Array<{
-    id: string;
-    name: string;
-    quantity: number;
-    price: number;
-    image: string;
-  }>;
-}
+// Mock data for demonstration purposes, making the page standalone.
+const mockPaymentData = {
+  amount: 7986.00,
+  orderId: "ORDER-MOCK-12345",
+  items: [
+    {
+      id: "1",
+      name: "Switch 24 Port Gigabit",
+      quantity: 1,
+      price: 2899,
+      image: "/assets/switch-24port.jpg",
+    },
+    {
+      id: "2",
+      name: "สายแลน Cat6 UTP Cable 305m",
+      quantity: 2,
+      price: 1599,
+      image: "/assets/lan-cable-cat6.jpg",
+    },
+    {
+      id: "3",
+      name: "WiFi Router AC1200",
+      quantity: 1,
+      price: 1899,
+      image: "/assets/wifi-router-ac1200.jpg",
+    },
+  ],
+};
 
 export default function PaymentSuccessPage() {
   const router = useRouter();
-  const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
-
-  useEffect(() => {
-    // If payment data is already in state, do nothing.
-    // This prevents re-running logic on subsequent renders.
-    if (paymentData) {
-      return;
-    }
-
-    const storedData = sessionStorage.getItem('paymentData');
-    if (storedData) {
-      setPaymentData(JSON.parse(storedData));
-      // Clear the data after reading to prevent reuse on page refresh.
-      sessionStorage.removeItem('paymentData');
-    } else {
-      // If no data in storage AND no data in state, it means the user landed here directly.
-      // So, we redirect them to the homepage.
-      router.replace("/");
-    }
-  }, [router, paymentData]);
+  const paymentData = mockPaymentData;
 
   const formatDate = (daysFromNow: number) => {
     const date = new Date();
@@ -51,17 +48,6 @@ export default function PaymentSuccessPage() {
       year: 'numeric'
     });
   };
-
-  if (!paymentData) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p>กำลังโหลดข้อมูลการสั่งซื้อ...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
