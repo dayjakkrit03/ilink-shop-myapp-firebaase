@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { Facebook, Instagram, Twitter, Youtube, MapPin, Phone, Mail } from "lucide-react";
 
 export const Footer = () => {
   return (
@@ -51,24 +51,30 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Payment & shipping */}
+          {/* Contact & Hours */}
           <div>
-            <h3 className="font-semibold mb-6 text-white text-lg">การชำระเงิน</h3>
-            <div className="grid grid-cols-3 gap-3 mb-6">
-              <div className="bg-white/10 backdrop-blur-sm p-3 rounded-lg border border-white/20 text-xs text-center text-white font-medium hover:bg-white/20 transition-colors">VISA</div>
-              <div className="bg-white/10 backdrop-blur-sm p-3 rounded-lg border border-white/20 text-xs text-center text-white font-medium hover:bg-white/20 transition-colors">MC</div>
-              <div className="bg-white/10 backdrop-blur-sm p-3 rounded-lg border border-white/20 text-xs text-center text-white font-medium hover:bg-white/20 transition-colors">JCB</div>
-              <div className="bg-white/10 backdrop-blur-sm p-3 rounded-lg border border-white/20 text-xs text-center text-white font-medium hover:bg-white/20 transition-colors">พร้อมเพย์</div>
-              <div className="bg-white/10 backdrop-blur-sm p-3 rounded-lg border border-white/20 text-xs text-center text-white font-medium hover:bg-white/20 transition-colors">True Money</div>
-              <div className="bg-white/10 backdrop-blur-sm p-3 rounded-lg border border-white/20 text-xs text-center text-white font-medium hover:bg-white/20 transition-colors">เก็บปลายทาง</div>
-            </div>
-            <h3 className="font-semibold mb-4 text-white text-lg">การขนส่ง</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-white/10 backdrop-blur-sm p-3 rounded-lg border border-white/20 text-xs text-center text-white font-medium hover:bg-white/20 transition-colors">Kerry</div>
-              <div className="bg-white/10 backdrop-blur-sm p-3 rounded-lg border border-white/20 text-xs text-center text-white font-medium hover:bg-white/20 transition-colors">Thailand Post</div>
-              <div className="bg-white/10 backdrop-blur-sm p-3 rounded-lg border border-white/20 text-xs text-center text-white font-medium hover:bg-white/20 transition-colors">Flash Express</div>
-              <div className="bg-white/10 backdrop-blur-sm p-3 rounded-lg border border-white/20 text-xs text-center text-white font-medium hover:bg-white/20 transition-colors">J&T Express</div>
-            </div>
+            <h3 className="font-semibold mb-6 text-white text-lg">ติดต่อเรา</h3>
+            <ul className="space-y-4 text-sm text-white/80">
+              <li className="flex items-start gap-3">
+                <MapPin className="h-4 w-4 mt-1 shrink-0 text-accent" />
+                <span>123/45 ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพฯ 10310</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="h-4 w-4 shrink-0 text-accent" />
+                <span>02-123-4567</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail className="h-4 w-4 shrink-0 text-accent" />
+                <span>info@interlink.co.th</span>
+              </li>
+            </ul>
+
+            <h3 className="font-semibold mt-8 mb-4 text-white text-lg">เวลาทำการ</h3>
+            <ul className="space-y-2 text-sm text-white/80">
+              <li>จันทร์ - ศุกร์: 9:00 - 18:00</li>
+              <li>เสาร์: 9:00 - 16:00</li>
+              <li>อาทิตย์: ปิด</li>
+            </ul>
           </div>
         </div>
 
