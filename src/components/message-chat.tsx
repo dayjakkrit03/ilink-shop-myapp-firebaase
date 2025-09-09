@@ -7,6 +7,7 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetDescription,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -161,6 +162,9 @@ export const MessageChat = () => {
             <MessageCircle className="h-5 w-5" />
             Messages
           </SheetTitle>
+          <SheetDescription className="sr-only">
+            หน้าต่างแชทสำหรับสนทนากับร้านค้าและดูข้อความ
+          </SheetDescription>
         </SheetHeader>
         
         <div className="flex flex-1 overflow-hidden">

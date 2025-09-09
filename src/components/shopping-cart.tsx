@@ -8,6 +8,7 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetDescription,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -86,6 +87,9 @@ export const ShoppingCart = ({ isOpen, onClose }: ShoppingCartProps) => {
             <CartIcon className="h-5 w-5" />
             ตะกร้าสินค้า ({totalUniqueItems} รายการ)
           </SheetTitle>
+          <SheetDescription className="sr-only">
+            จัดการสินค้าในตะกร้าของคุณและดำเนินการชำระเงิน
+          </SheetDescription>
         </SheetHeader>
         
         <div className="flex-1 flex flex-col min-h-0">
