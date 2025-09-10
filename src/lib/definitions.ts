@@ -13,3 +13,15 @@ export interface Store {
   banner_url: string;
   logo_url: string;
 }
+
+export interface FeaturedProduct {
+  id: string;
+  slug: string;
+  name: string;
+  price: number;
+  original_price?: number | null;
+  avg_rating?: number | null;
+  reviews_count?: number | null;
+  image_url: string;
+  is_free_shipping?: boolean | null;
+}
