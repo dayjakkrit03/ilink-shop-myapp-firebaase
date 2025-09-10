@@ -16,18 +16,8 @@ type StoreLike = {
   logoUrl?: string | null;
 };
 
-// ---- mock data with correct public paths ----
-const MOCK_STORES: Array<StoreLike & { image: string; logo: string; slug?: string }> = [
-  { id: 1, name: "CB Cotton IT Store", brand: "IT & Network Solutions", image: "/assets/store-cb-cotton.jpg", logo: "/assets/logo-cb-cotton.jpg", slug: "cb-cotton" },
-  { id: 2, name: "CORRETTO SUITE", brand: "Enterprise IT Equipment", image: "/assets/store-corretto-suite.jpg", logo: "/assets/logo-corretto-suite.jpg", slug: "corretto-suite" },
-  { id: 3, name: "Thailand Tech Plaza", brand: "Network & Server Solutions", image: "/assets/store-thailand-pool.jpg", logo: "/assets/logo-thailand-tech.jpg", slug: "thailand-tech" },
-  { id: 4, name: "IN2IT Computer", brand: "Colorful Tech Solutions", image: "/assets/store-in2it.jpg", logo: "/assets/logo-in2it.jpg", slug: "in2it" },
-  { id: 5, name: "Smart Tech Shop", brand: "Smart IT Solutions", image: "/assets/store-toy-smart.jpg", logo: "/assets/logo-smart-tech.jpg", slug: "smart-tech" },
-  { id: 6, name: "Quiescent Systems", brand: "Professional IT Hardware", image: "/assets/store-quiescent.jpg", logo: "/assets/logo-quiescent.jpg", slug: "quiescent" },
-];
-
 type InterlinkMallProps = {
-  /** รายชื่อร้านจาก API (ถ้าไม่ส่ง จะ fallback เป็น mock) */
+  /** รายชื่อร้านจาก API */
   stores?: StoreLike[];
   /** แสดงจำนวนร้านกี่ร้าน (default 6) */
   limit?: number;
@@ -49,7 +39,7 @@ function toCardData(s: StoreLike | (StoreLike & { image?: string; logo?: string 
 }
 
 export const InterlinkMall = ({
-  stores,
+  stores = [],
   limit = 6,
   basePath = "/stores",
   onViewAllClick,
@@ -57,7 +47,7 @@ export const InterlinkMall = ({
 }: InterlinkMallProps) => {
   const router = useRouter();
 
-  const data = (stores && stores.length > 0 ? stores : MOCK_STORES)
+  const data = stores
     .slice(0, limit)
     .map(toCardData);
 

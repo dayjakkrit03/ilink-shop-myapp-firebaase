@@ -10,13 +10,14 @@ import { ProductGrid } from "@/components/product-grid";
 import { Footer } from "@/components/footer";
 import { ShoppingCart } from "@/components/shopping-cart";
 import { MessageChat } from "@/components/message-chat";
-import { Category } from "@/lib/definitions";
+import { Category, Store } from "@/lib/definitions";
 
 interface HomeClientProps {
   categories: Category[];
+  stores: Store[];
 }
 
-export default function HomeClient({ categories }: HomeClientProps) {
+export default function HomeClient({ categories, stores }: HomeClientProps) {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   // Mock cart items count - in real app this would come from state management
@@ -30,7 +31,7 @@ export default function HomeClient({ categories }: HomeClientProps) {
         <ProductGrid onAddToCart={() => setIsCartOpen(true)} />
         <CategoryGrid items={categories} />
         <FlashSale />
-        <InterlinkMall />
+        <InterlinkMall stores={stores} />
       </main>
       <Footer />
       <ShoppingCart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
