@@ -2,38 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-
-export interface Category {
-  id?: number | string;
-  name: string;
-  slug: string;
-  image_url?: string;
-  image?: string;
-}
-
-const MOCK_CATEGORIES: Category[] = [
-  { slug: "lan-utp", image: "/assets/category-lan-utp.jpg", name: "LAN (UTP) System" },
-  { slug: "fiber-optic", image: "/assets/category-fiber-optic.jpg", name: "FIBER OPTIC System" },
-  { slug: "fttr-fttx", image: "/assets/category-fttr-fttx.jpg", name: "FTTR/FTTx OVAL / FLAT CABLE" },
-  { slug: "data-center", image: "/assets/category-data-center.jpg", name: "DATA CENTER System" },
-  { slug: "coaxial", image: "/assets/category-coaxial.jpg", name: "COAXIAL (RG) System" },
-  { slug: "telephone", image: "/assets/category-telephone.jpg", name: "Telephone CABLE" },
-  { slug: "solar", image: "/assets/category-solar.jpg", name: "SOLAR CABLE" },
-  { slug: "security-control", image: "/assets/category-security-control.jpg", name: "SECURITY AND CONTROL System" },
-  { slug: "networking", image: "/assets/category-networking.jpg", name: "NETWORKING System" },
-  { slug: "germany-rack", image: "/assets/category-germany-rack.jpg", name: "GERMANY RACK" },
-  { slug: "cctv-cabinet", image: "/assets/category-cctv-cabinet.jpg", name: "CCTV OUTDOOR CABINET" },
-  { slug: "link-rack", image: "/assets/category-link-rack.jpg", name: "LINK RACK" },
-];
+import { Category } from "@/lib/definitions";
 
 interface CategoryGridProps {
   items?: Category[];
 }
 
-export const CategoryGrid = ({ items }: CategoryGridProps) => {
+export const CategoryGrid = ({ items = [] }: CategoryGridProps) => {
   const router = useRouter();
-
-  const data = items && items.length > 0 ? items : MOCK_CATEGORIES;
 
   const handleCategoryClick = (category: { slug?: string; name: string }) => {
     router.push(`/products?category=${encodeURIComponent(category.slug ?? category.name)}`);
@@ -52,7 +28,7 @@ export const CategoryGrid = ({ items }: CategoryGridProps) => {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-6">
-          {data.map((category, index) => (
+          {items.map((category, index) => (
             <div
               key={category.slug ?? index}
               onClick={() => handleCategoryClick(category)}
@@ -61,7 +37,7 @@ export const CategoryGrid = ({ items }: CategoryGridProps) => {
             >
               <div className="mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                 <Image
-                  src={category.image_url ?? category.image ?? "/placeholder.png"}
+                  src={category.image_url ?? "/placeholder.png"}
                   alt={category.name}
                   width={64}
                   height={64}
