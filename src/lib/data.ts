@@ -27,7 +27,7 @@ export async function fetchStores(): Promise<Store[]> {
       `SELECT id, name, description, slug, banner_url, logo_url FROM stores LIMIT 6`
     );
     return data.rows;
-  } catch (error)
+  } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch stores data.');
   }
