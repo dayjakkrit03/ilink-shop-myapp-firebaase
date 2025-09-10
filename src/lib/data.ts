@@ -42,13 +42,12 @@ export async function fetchFeaturedProducts(): Promise<FeaturedProduct[]> {
         p.id,
         p.slug,
         p.name,
-        p.avg_rating,
-        p.reviews_count,
-        p.is_free_shipping,
-        -- Assuming the first variant is the primary one for display
+        (SELECT AVG(rating)::numeric(10,2) FROM product_reviews WHERE product_id = p.id) as avg_rating,
+        (SELECT COUNT(*) FROM product_reviews WHERE product_id = p.id) as reviews_count,
+        -- is_free_shipping is not in the schema, defaulting to false
+        false as is_free_shipping,
         (SELECT price FROM product_variants WHERE product_id = p.id ORDER BY created_at ASC LIMIT 1) as price,
         (SELECT original_price FROM product_variants WHERE product_id = p.id ORDER BY created_at ASC LIMIT 1) as original_price,
-        -- Assuming the first image is the primary one
         (SELECT image_url FROM product_images WHERE product_id = p.id ORDER BY "order" ASC LIMIT 1) as image_url
       FROM
         products p
