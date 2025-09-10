@@ -8,7 +8,7 @@ export interface Category {
 export interface Store {
   id: number;
   name: string;
-  brand?: string;
+  description?: string;
   slug: string;
   banner_url: string;
   logo_url: string;

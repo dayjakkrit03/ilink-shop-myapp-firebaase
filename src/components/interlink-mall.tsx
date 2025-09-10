@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 type StoreLike = {
   id: string | number;
   name: string;
-  brand?: string | null;
+  description?: string | null;
   slug?: string | null;
   image_url?: string | null;
   logo_url?: string | null;
@@ -108,9 +108,9 @@ export const InterlinkMall = ({
                 <h3 className="font-semibold text-sm text-foreground truncate">
                   {store.name}
                 </h3>
-                {store.brand && (
+                {store.description && (
                   <p className="text-xs text-muted-foreground truncate">
-                    {store.brand}
+                    {store.description}
                   </p>
                 )}
               </div>
