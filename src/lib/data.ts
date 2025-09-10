@@ -24,7 +24,7 @@ export async function fetchStores(): Promise<Store[]> {
     console.log('Fetching stores from database...');
     // We limit to 6 as that's the default display amount in the component
     const data = await pool.query<Store>(
-      `SELECT id, name, slug, image_url, logo_url FROM stores LIMIT 6`
+      `SELECT id, name, slug, banner_url, logo_url FROM stores LIMIT 6`
     );
     return data.rows;
   } catch (error) {

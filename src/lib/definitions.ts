@@ -10,6 +10,6 @@ export interface Store {
   name: string;
   brand?: string;
   slug: string;
-  image_url: string;
+  banner_url: string;
   logo_url: string;
 }

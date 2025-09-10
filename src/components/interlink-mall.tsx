@@ -12,6 +12,7 @@ type StoreLike = {
   slug?: string | null;
   image_url?: string | null;
   logo_url?: string | null;
+  banner_url?: string | null;
   imageUrl?: string | null;
   logoUrl?: string | null;
 };
@@ -32,7 +33,7 @@ type InterlinkMallProps = {
 /** ตัวแปลงจากข้อมูล API → shape ที่การ์ดต้องใช้ */
 function toCardData(s: StoreLike | (StoreLike & { image?: string; logo?: string })) {
   const image =
-    (s as any).image ?? s.image_url ?? s.imageUrl ?? "/placeholder.png";
+    (s as any).image ?? s.banner_url ?? s.image_url ?? s.imageUrl ?? "/placeholder.png";
   const logo =
     (s as any).logo ?? s.logo_url ?? s.logoUrl ?? "/placeholder.png";
   return { ...s, image, logo };
