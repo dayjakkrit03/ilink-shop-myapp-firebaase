@@ -25,29 +25,14 @@ export const ProductGrid = ({ products = [], onAddToCart }: ProductGridProps) =>
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
-          {products.map((product) => {
-            // The discount is now calculated based on camelCase props
-            const discount = product.originalPrice && product.price
-              ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
-              : undefined;
-
-            return (
-              <ProductCard 
-                key={product.id} 
-                id={product.id}
-                slug={product.slug}
-                name={product.name}
-                price={product.price}
-                originalPrice={product.originalPrice} // CORRECT
-                discount={discount}
-                rating={product.rating} // CORRECT
-                reviews={product.reviews} // CORRECT
-                image={product.image ?? "/placeholder.png"} // CORRECT
-                isFreeShipping={product.isFreeShipping} // CORRECT
-                onAddToCart={onAddToCart} 
-              />
-            );
-          })}
+          {products.map((product) => (
+            <ProductCard 
+              key={product.id} 
+              {...product} // Pass all product props directly
+              onAddToCart={onAddToCart}
+              variant="default" // Explicitly set the variant
+            />
+          ))}
         </div>
       </div>
     </section>

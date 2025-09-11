@@ -1,14 +1,15 @@
-import { fetchCategories, fetchStores, fetchFeaturedProducts, fetchHeroBanners, fetchPromotions } from "@/lib/data";
+import { fetchCategories, fetchStores, fetchFeaturedProducts, fetchHeroBanners, fetchPromotions, fetchClearanceSaleProducts } from "@/lib/data";
 import HomeClient from "./home-client";
 
 export default async function Page() {
   // Fetch all necessary data in parallel
-  const [categories, stores, featuredProducts, heroBanners, promotions] = await Promise.all([
+  const [categories, stores, featuredProducts, heroBanners, promotions, clearanceSaleProducts] = await Promise.all([
     fetchCategories(),
     fetchStores(),
     fetchFeaturedProducts(),
     fetchHeroBanners(),
     fetchPromotions(),
+    fetchClearanceSaleProducts(),
   ]);
 
   return <HomeClient 
@@ -17,5 +18,6 @@ export default async function Page() {
     featuredProducts={featuredProducts} 
     heroBanners={heroBanners} 
     promotions={promotions} 
+    clearanceSaleProducts={clearanceSaleProducts} 
   />;
 }

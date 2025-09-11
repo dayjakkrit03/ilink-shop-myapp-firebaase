@@ -47,8 +47,7 @@ export async function fetchFeaturedProducts() {
   try {
     const featuredCollection = await prisma.collections.findUnique({
       where: {
-        // CORRECTED: Match the slug from the database screenshot
-        slug: 'recommended-products', 
+        slug: 'recommended-products',
       },
       select: {
         collection_products: {
@@ -114,6 +113,81 @@ export async function fetchFeaturedProducts() {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch featured products data.');
+  }
+}
+
+export async function fetchClearanceSaleProducts() {
+  noStore();
+  try {
+    const saleCollection = await prisma.collections.findUnique({
+      where: {
+        slug: 'clearance-sale', // Target the clearance sale collection
+      },
+      select: {
+        collection_products: {
+          orderBy: {
+            position: 'asc',
+          },
+          select: {
+            products: {
+              select: {
+                id: true,
+                slug: true,
+                name: true,
+                avg_rating: true,
+                reviews_count: true,
+                is_free_shipping: true,
+                product_variants: {
+                  select: {
+                    price: true,
+                    compare_at_price: true,
+                  },
+                  orderBy: {
+                    created_at: 'asc',
+                  },
+                  take: 1,
+                },
+                product_images: {
+                  select: {
+                    url: true,
+                  },
+                  orderBy: {
+                    position: 'asc',
+                  },
+                  take: 1,
+                },
+              },
+            },
+          },
+          take: 8, // Limit to 8 products for the section
+        },
+      },
+    });
+
+    if (!saleCollection) {
+      console.log("Collection 'clearance-sale' not found. Returning empty array.");
+      return [];
+    }
+
+    const products = saleCollection.collection_products.map(cp => cp.products);
+
+    // The mapping logic is identical to featured products, creating a consistent product shape
+    const saleProducts = products.map(p => ({
+      id: p.id,
+      slug: p.slug,
+      name: p.name,
+      rating: p.avg_rating?.toNumber() ?? 0,
+      reviews: p.reviews_count ?? 0,
+      isFreeShipping: p.is_free_shipping ?? false,
+      price: p.product_variants[0]?.price?.toNumber() ?? 0,
+      originalPrice: p.product_variants[0]?.compare_at_price?.toNumber() ?? undefined,
+      image: p.product_images[0]?.url ?? '',
+    }));
+
+    return saleProducts;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch clearance sale products data.');
   }
 }
 

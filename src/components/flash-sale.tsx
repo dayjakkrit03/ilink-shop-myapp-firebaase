@@ -5,55 +5,16 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "./product-card";
 import { Clock } from "lucide-react";
+import type { fetchClearanceSaleProducts } from "@/lib/data";
 
-const flashSaleProducts = [
-  {
-    id: 1,
-    name: "Ethernet PCI Network Card Gigabit",
-    price: 650,
-    originalPrice: 1300,
-    discount: 50,
-    rating: 4.6,
-    reviews: 234,
-    image: "/assets/ethernet-pci-card.jpg",
-    isFreeShipping: true,
-  },
-  {
-    id: 2,
-    name: "WiFi Router AC1200 Dual Band",
-    price: 1490,
-    originalPrice: 2980,
-    discount: 50,
-    rating: 4.7,
-    reviews: 345,
-    image: "/assets/wifi-router-ac1200.jpg",
-    isFreeShipping: true,
-  },
-  {
-    id: 3,
-    name: "24-Port Managed Switch Gigabit",
-    price: 1945,
-    originalPrice: 3890,
-    discount: 50,
-    rating: 4.5,
-    reviews: 167,
-    image: "/assets/switch-24port.jpg",
-    isFreeShipping: true,
-  },
-  {
-    id: 4,
-    name: "CAT5E UTP Cable LSZH 305m",
-    price: 1297,
-    originalPrice: 2594,
-    discount: 50,
-    rating: 4.8,
-    reviews: 456,
-    image: "/assets/lan-cat5e-lszh.jpg",
-    isFreeShipping: true,
-  },
-];
+// Infer the product type from the data-fetching function's return type
+type Product = Awaited<ReturnType<typeof fetchClearanceSaleProducts>>[number];
 
-export const FlashSale = () => {
+interface FlashSaleProps {
+  products: Product[];
+}
+
+export const FlashSale = ({ products }: FlashSaleProps) => {
   const router = useRouter();
   const [timeLeft, setTimeLeft] = useState({
     hours: 2,
@@ -62,7 +23,7 @@ export const FlashSale = () => {
   });
 
   const handleViewAll = () => {
-    router.push('/products?search=Clearance Sale');
+    router.push('/collections/clearance-sale');
   };
 
   useEffect(() => {
@@ -115,10 +76,14 @@ export const FlashSale = () => {
           </Button>
         </div>
 
-        {/* Flash Sale Products */}
+        {/* Flash Sale Products - Now using data from props */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {flashSaleProducts.map((product) => (
-            <ProductCard key={product.id} {...product} />
+          {products.map((product) => (
+            <ProductCard 
+              key={product.id} 
+              {...product} // Pass all product props directly
+              variant="clearance" // Use the clearance variant
+            />
           ))}
         </div>
       </div>
