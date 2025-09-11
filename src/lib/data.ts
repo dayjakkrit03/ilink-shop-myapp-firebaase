@@ -1,80 +1,153 @@
-import pool from './db';
-import { Category, Store, FeaturedProduct, HeroBanner, Promotion } from './definitions';
+import { prisma } from './db';
 import { unstable_noStore as noStore } from 'next/cache';
 
-export async function fetchCategories(): Promise<Category[]> {
+export async function fetchCategories() {
   noStore();
   try {
-    const data = await pool.query<Category>(
-      `SELECT name, slug, image_url FROM categories ORDER BY name ASC`
-    );
-    return data.rows;
+    const categories = await prisma.categories.findMany({
+      select: {
+        name: true,
+        slug: true,
+        image_url: true,
+      },
+      orderBy: {
+        name: 'asc',
+      },
+    });
+    return categories;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch categories data.');
   }
 }
 
-export async function fetchStores(): Promise<Store[]> {
+export async function fetchStores() {
   noStore();
   try {
-    const data = await pool.query<Store>(
-      `SELECT id, name, description, slug, banner_url, logo_url FROM stores LIMIT 6`
-    );
-    return data.rows;
+    const stores = await prisma.stores.findMany({
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        slug: true,
+        banner_url: true,
+        logo_url: true,
+      },
+      take: 6,
+    });
+    return stores;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch stores data.');
   }
 }
 
-export async function fetchFeaturedProducts(): Promise<FeaturedProduct[]> {
+export async function fetchFeaturedProducts() {
   noStore();
   try {
-    const data = await pool.query<FeaturedProduct>(`
-      SELECT
-        p.id,
-        p.slug,
-        p.name,
-        p.avg_rating,
-        p.reviews_count,
-        p.is_free_shipping,
-        (SELECT price FROM product_variants WHERE product_id = p.id ORDER BY created_at ASC LIMIT 1) as price,
-        (SELECT compare_at_price FROM product_variants WHERE product_id = p.id ORDER BY created_at ASC LIMIT 1) as original_price,
-        (SELECT url FROM product_images WHERE product_id = p.id ORDER BY "position" ASC LIMIT 1) as image_url
-      FROM
-        products p
-      WHERE
-        p.is_active = true
-      LIMIT 8;
-    `);
-    return data.rows;
+    const products = await prisma.products.findMany({
+      where: {
+        is_active: true,
+      },
+      select: {
+        id: true,
+        slug: true,
+        name: true,
+        avg_rating: true,
+        reviews_count: true,
+        is_free_shipping: true,
+        product_variants: {
+          select: {
+            price: true,
+            compare_at_price: true,
+          },
+          orderBy: {
+            created_at: 'asc',
+          },
+          take: 1,
+        },
+        product_images: {
+          select: {
+            url: true,
+          },
+          orderBy: {
+            position: 'asc',
+          },
+          take: 1,
+        },
+      },
+      take: 8,
+    });
+
+    // Convert Decimal types to Number for Client Component serialization
+    const featuredProducts = products.map(p => ({
+      id: p.id,
+      slug: p.slug,
+      name: p.name,
+      avg_rating: p.avg_rating?.toNumber() ?? null,
+      reviews_count: p.reviews_count,
+      is_free_shipping: p.is_free_shipping,
+      price: p.product_variants[0]?.price?.toNumber() ?? 0,
+      original_price: p.product_variants[0]?.compare_at_price?.toNumber() ?? null,
+      image_url: p.product_images[0]?.url ?? '',
+    }));
+
+    return featuredProducts;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch featured products data.');
   }
 }
 
-export async function fetchHeroBanners(): Promise<HeroBanner[]> {
+export async function fetchHeroBanners() {
   noStore();
   try {
-    const data = await pool.query<HeroBanner>(
-      `SELECT id, title, subtitle, image_url, link_url, badge_text, cta_text FROM hero_banners WHERE is_active = true ORDER BY sort_order ASC`
-    );
-    return data.rows;
+    const banners = await prisma.hero_banners.findMany({
+      where: {
+        is_active: true,
+      },
+      select: {
+        id: true,
+        title: true,
+        subtitle: true,
+        image_url: true,
+        link_url: true,
+        badge_text: true,
+        cta_text: true,
+      },
+      orderBy: {
+        sort_order: 'asc',
+      },
+    });
+    return banners;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch hero banners data.');
   }
 }
 
-export async function fetchPromotions(): Promise<Promotion[]> {
+export async function fetchPromotions() {
   noStore();
   try {
-    const data = await pool.query<Promotion>(
-      `SELECT id, slug, title, subtitle, image_url, link_url, badge_text FROM promotions WHERE is_active = true ORDER BY position ASC LIMIT 3`
-    );
-    return data.rows;
+    const promotions = await prisma.promotions.findMany({
+      where: {
+        is_active: true,
+      },
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        subtitle: true,
+        image_url: true,
+        link_url: true,
+        badge_text: true,
+      },
+      orderBy: {
+        position: 'asc',
+      },
+      take: 3,
+    });
+    return promotions;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch promotions data.');

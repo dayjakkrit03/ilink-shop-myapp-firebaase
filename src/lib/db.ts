@@ -1,12 +1,15 @@
-import { Pool } from 'pg';
+import { PrismaClient } from '../generated/prisma';
 
-// This ensures that the application will not start if the DATABASE_URL is not set.
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL environment variable is not set');
+declare global {
+  // allow global `var` declarations
+  // eslint-disable-next-line no-var
+  var prisma: PrismaClient | undefined;
 }
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+export const prisma =
+  global.prisma ||
+  new PrismaClient({
+    log: ['query'],
+  });
 
-export default pool;
+if (process.env.NODE_ENV !== 'production') global.prisma = prisma;
