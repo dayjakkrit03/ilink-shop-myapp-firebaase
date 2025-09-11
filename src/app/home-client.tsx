@@ -10,15 +10,17 @@ import { ProductGrid } from "@/components/product-grid";
 import { Footer } from "@/components/footer";
 import { ShoppingCart } from "@/components/shopping-cart";
 import { MessageChat } from "@/components/message-chat";
-import { Category, Store, FeaturedProduct } from "@/lib/definitions";
+import { Category, Store, FeaturedProduct, HeroBanner, Promotion } from "@/lib/definitions";
 
 interface HomeClientProps {
   categories: Category[];
   stores: Store[];
   featuredProducts: FeaturedProduct[];
+  heroBanners: HeroBanner[];
+  promotions: Promotion[];
 }
 
-export default function HomeClient({ categories, stores, featuredProducts }: HomeClientProps) {
+export default function HomeClient({ categories, stores, featuredProducts, heroBanners, promotions }: HomeClientProps) {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   // Mock cart items count - in real app this would come from state management
@@ -28,7 +30,7 @@ export default function HomeClient({ categories, stores, featuredProducts }: Hom
     <div className="min-h-screen bg-background">
       <Header onCartClick={() => setIsCartOpen(true)} cartItemCount={cartItemCount} />
       <main>
-        <HeroSection />
+        <HeroSection banners={heroBanners} promotions={promotions} />
         <ProductGrid products={featuredProducts} onAddToCart={() => setIsCartOpen(true)} />
         <CategoryGrid items={categories} />
         <FlashSale />

@@ -25,3 +25,23 @@ export interface FeaturedProduct {
   image_url: string;
   is_free_shipping?: boolean | null;
 }
+
+export interface HeroBanner {
+  id: string;
+  title: string;
+  subtitle: string;
+  image_url: string;
+  link_url?: string;
+  badge_text?: string;
+  cta_text?: string;
+}
+
+export interface Promotion {
+  id: string;
+  slug: string;
+  title: string;
+  subtitle: string;
+  image_url?: string | null;
+  link_url?: string | null;
+  badge_text?: string | null;
+}

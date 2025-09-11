@@ -1,13 +1,10 @@
 import pool from './db';
-import { Category, Store, FeaturedProduct } from './definitions';
+import { Category, Store, FeaturedProduct, HeroBanner, Promotion } from './definitions';
 import { unstable_noStore as noStore } from 'next/cache';
 
 export async function fetchCategories(): Promise<Category[]> {
-  // Opt out of caching to ensure we get fresh data during development
-  noStore(); 
-  
+  noStore();
   try {
-    console.log('Fetching categories from database...');
     const data = await pool.query<Category>(
       `SELECT name, slug, image_url FROM categories ORDER BY name ASC`
     );
@@ -21,8 +18,6 @@ export async function fetchCategories(): Promise<Category[]> {
 export async function fetchStores(): Promise<Store[]> {
   noStore();
   try {
-    console.log('Fetching stores from database...');
-    // We limit to 6 as that's the default display amount in the component
     const data = await pool.query<Store>(
       `SELECT id, name, description, slug, banner_url, logo_url FROM stores LIMIT 6`
     );
@@ -36,7 +31,6 @@ export async function fetchStores(): Promise<Store[]> {
 export async function fetchFeaturedProducts(): Promise<FeaturedProduct[]> {
   noStore();
   try {
-    console.log('Fetching featured products from database...');
     const data = await pool.query<FeaturedProduct>(`
       SELECT
         p.id,
@@ -58,5 +52,31 @@ export async function fetchFeaturedProducts(): Promise<FeaturedProduct[]> {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch featured products data.');
+  }
+}
+
+export async function fetchHeroBanners(): Promise<HeroBanner[]> {
+  noStore();
+  try {
+    const data = await pool.query<HeroBanner>(
+      `SELECT id, title, subtitle, image_url, link_url, badge_text, cta_text FROM hero_banners WHERE is_active = true ORDER BY sort_order ASC`
+    );
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch hero banners data.');
+  }
+}
+
+export async function fetchPromotions(): Promise<Promotion[]> {
+  noStore();
+  try {
+    const data = await pool.query<Promotion>(
+      `SELECT id, slug, title, subtitle, image_url, link_url, badge_text FROM promotions WHERE is_active = true ORDER BY position ASC LIMIT 3`
+    );
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch promotions data.');
   }
 }
