@@ -10,7 +10,16 @@ import { ProductGrid } from "@/components/product-grid";
 import { Footer } from "@/components/footer";
 import { ShoppingCart } from "@/components/shopping-cart";
 import { MessageChat } from "@/components/message-chat";
-import { Category, Store, FeaturedProduct, HeroBanner, Promotion } from "@/lib/definitions";
+
+// Import the data-fetching functions to infer their return types
+import type { fetchCategories, fetchStores, fetchFeaturedProducts, fetchHeroBanners, fetchPromotions } from "@/lib/data";
+
+// Infer types directly from the data-fetching functions
+type Category = Awaited<ReturnType<typeof fetchCategories>>[number];
+type Store = Awaited<ReturnType<typeof fetchStores>>[number];
+type FeaturedProduct = Awaited<ReturnType<typeof fetchFeaturedProducts>>[number];
+type HeroBanner = Awaited<ReturnType<typeof fetchHeroBanners>>[number];
+type Promotion = Awaited<ReturnType<typeof fetchPromotions>>[number];
 
 interface HomeClientProps {
   categories: Category[];

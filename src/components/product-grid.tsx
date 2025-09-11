@@ -1,10 +1,14 @@
-import { ProductCard } from "./product-card";
+import { ProductCard, type ProductCardProps } from "./product-card";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
-import { FeaturedProduct } from "@/lib/definitions";
+
+// The data now comes from the server component, already mapped.
+// We can use the ProductCardProps to define the shape of our product.
+// This ensures that ProductGrid and ProductCard are always in sync.
+type Product = Omit<ProductCardProps, 'onAddToCart'>;
 
 interface ProductGridProps {
-  products: FeaturedProduct[];
+  products: Product[];
   onAddToCart?: () => void;
 }
 
@@ -22,8 +26,9 @@ export const ProductGrid = ({ products = [], onAddToCart }: ProductGridProps) =>
         
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
           {products.map((product) => {
-            const discount = product.original_price && product.price
-              ? Math.round(((product.original_price - product.price) / product.original_price) * 100)
+            // The discount is now calculated based on camelCase props
+            const discount = product.originalPrice && product.price
+              ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
               : undefined;
 
             return (
@@ -33,12 +38,12 @@ export const ProductGrid = ({ products = [], onAddToCart }: ProductGridProps) =>
                 slug={product.slug}
                 name={product.name}
                 price={product.price}
-                originalPrice={product.original_price ?? undefined}
+                originalPrice={product.originalPrice} // CORRECT
                 discount={discount}
-                rating={product.avg_rating ?? 0}
-                reviews={product.reviews_count ?? 0}
-                image={product.image_url ?? "/placeholder.png"}
-                isFreeShipping={product.is_free_shipping ?? false}
+                rating={product.rating} // CORRECT
+                reviews={product.reviews} // CORRECT
+                image={product.image ?? "/placeholder.png"} // CORRECT
+                isFreeShipping={product.isFreeShipping} // CORRECT
                 onAddToCart={onAddToCart} 
               />
             );

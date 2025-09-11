@@ -79,17 +79,17 @@ export async function fetchFeaturedProducts() {
       take: 8,
     });
 
-    // Convert Decimal types to Number for Client Component serialization
+    // Map data to match the expected prop types of the client component (e.g., ProductCardProps)
     const featuredProducts = products.map(p => ({
       id: p.id,
       slug: p.slug,
       name: p.name,
-      avg_rating: p.avg_rating?.toNumber() ?? null,
-      reviews_count: p.reviews_count,
-      is_free_shipping: p.is_free_shipping,
+      rating: p.avg_rating?.toNumber() ?? 0, // Use 0 as a fallback for rating
+      reviews: p.reviews_count ?? 0, // Use 0 as a fallback for reviews
+      isFreeShipping: p.is_free_shipping ?? false,
       price: p.product_variants[0]?.price?.toNumber() ?? 0,
-      original_price: p.product_variants[0]?.compare_at_price?.toNumber() ?? null,
-      image_url: p.product_images[0]?.url ?? '',
+      originalPrice: p.product_variants[0]?.compare_at_price?.toNumber() ?? undefined, // FINAL FIX: Match component prop type (number | undefined)
+      image: p.product_images[0]?.url ?? '',
     }));
 
     return featuredProducts;
