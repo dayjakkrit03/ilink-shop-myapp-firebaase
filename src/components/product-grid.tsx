@@ -8,16 +8,17 @@ import { ChevronRight } from "lucide-react";
 type Product = Omit<ProductCardProps, 'onAddToCart'>;
 
 interface ProductGridProps {
+  title: string; // Title is now a required prop
   products: Product[];
   onAddToCart?: () => void;
 }
 
-export const ProductGrid = ({ products = [], onAddToCart }: ProductGridProps) => {
+export const ProductGrid = ({ title, products = [], onAddToCart }: ProductGridProps) => {
   return (
     <section className="py-12 bg-muted">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl sm:text-2xl font-bold text-foreground">สินค้าแนะนำ</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground">{title}</h2>
           <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80">
             ดูทั้งหมด
             <ChevronRight className="h-4 w-4 ml-1" />
