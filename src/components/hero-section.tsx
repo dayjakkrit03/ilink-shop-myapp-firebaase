@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -7,7 +7,27 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { HeroBanner, Promotion } from '@/lib/definitions';
+
+// NOTE: Exporting these types to be used in other components like HomeClient.
+export type HeroBanner = {
+  id: string;
+  title: string;
+  subtitle: string | null;
+  image_url: string;
+  link_url: string | null;
+  badge_text: string | null;
+  cta_text: string | null;
+};
+
+export type Promotion = {
+  id: string;
+  slug: string;
+  title: string;
+  subtitle: string | null;
+  image_url: string | null;
+  link_url: string | null;
+};
+
 
 export type HeroSectionProps = {
   banners?: HeroBanner[];
@@ -56,7 +76,7 @@ export const HeroSection = ({ banners = [], promotions = [] }: HeroSectionProps)
     emblaApi.on('reInit', onSelect);
   }, [emblaApi, setScrollSnaps, onSelect]);
 
-  const navigateSmart = (to: string) => {
+  const navigateSmart = (to: string | null) => {
     if (!to) return;
     if (/^https?:\/\//i.test(to)) {
       window.open(to, '_blank', 'noopener');
@@ -164,7 +184,7 @@ export const HeroSection = ({ banners = [], promotions = [] }: HeroSectionProps)
                 return (
                   <div 
                     key={promo.id}
-                    onClick={() => navigateSmart(promo.link_url!)}
+                    onClick={() => navigateSmart(promo.link_url)}
                     className={`relative p-6 rounded-xl shadow-card hover:shadow-card-hover transition-all duration-300 hover:scale-105 group cursor-pointer overflow-hidden ${promo.image_url ? 'text-white' : cardColor}`}>
                     
                     {promo.image_url && (

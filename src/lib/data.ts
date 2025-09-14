@@ -1,6 +1,28 @@
 import { prisma } from './db';
 import { unstable_noStore as noStore } from 'next/cache';
 
+// --- Type Definitions ---
+// Restoring these types here to match the data fetching functions
+export type Promotion = {
+  id: string;
+  slug: string;
+  title: string;
+  subtitle: string | null;
+  image_url: string | null;
+  link_url: string | null;
+  badge_text: string | null;
+};
+
+export type HeroBanner = {
+  id: string;
+  title: string;
+  subtitle: string;
+  image_url: string;
+  link_url: string;
+  badge_text?: string;
+  cta_text?: string;
+};
+
 export async function fetchCategories() {
   noStore();
   try {
@@ -14,7 +36,15 @@ export async function fetchCategories() {
         name: 'asc',
       },
     });
-    return categories;
+
+    // Handle null image_url
+    const formattedCategories = categories.map(category => ({
+      ...category,
+      image_url: category.image_url ?? '',
+    }));
+
+    return formattedCategories;
+
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch categories data.');
@@ -171,7 +201,6 @@ export async function fetchClearanceSaleProducts() {
 
     const products = saleCollection.collection_products.map(cp => cp.products);
 
-    // The mapping logic is identical to featured products, creating a consistent product shape
     const saleProducts = products.map(p => ({
       id: p.id,
       slug: p.slug,
@@ -191,6 +220,7 @@ export async function fetchClearanceSaleProducts() {
   }
 }
 
+// RESTORING the function to fetch from the database table
 export async function fetchHeroBanners() {
   noStore();
   try {
@@ -218,6 +248,7 @@ export async function fetchHeroBanners() {
   }
 }
 
+// RESTORING the function to fetch from the database table
 export async function fetchPromotions() {
   noStore();
   try {
