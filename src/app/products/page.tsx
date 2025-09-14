@@ -2,10 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
-import { ShoppingCart } from "@/components/shopping-cart";
-import { MessageChat } from "@/components/message-chat";
 import { ProductFilters } from "@/components/product-filters";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
@@ -17,14 +13,12 @@ export default function ProductListingPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const isMobile = useIsMobile();
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [sortBy, setSortBy] = useState("best-match");
   const [currentPage, setCurrentPage] = useState(1);
   
   const category = searchParams.get("category") || "";
   const search = searchParams.get("search") || "";
-  const cartItemCount = 4;
 
   // Scroll to top when component mounts
   useEffect(() => {
@@ -41,77 +35,60 @@ export default function ProductListingPage() {
       id: 1,
       name: "US-9015LSZH CAT 5E UTP Cable LSZH 305m",
       price: 4837.00,
-      originalPrice: null,
+      originalPrice: undefined,
       image: "/assets/lan-cat5e-lszh.jpg",
       rating: 4.8,
       reviews: 156,
-      discount: null,
-      isInterlinkMall: true,
-      badge: "InterlinkMall"
     },
     {
       id: 2,
       name: "US-9025LSZH CAT 5E STRAND Cable 305m",
       price: 6046.00,
-      originalPrice: null,
+      originalPrice: undefined,
       image: "/assets/lan-cat5e-strand.jpg",
       rating: 4.6,
       reviews: 89,
-      discount: null,
-      isFreeShipping: true,
-      badge: "InterlinkMall"
     },
     {
       id: 3,
       name: "US-9055E CAT 5E UTP Cable Outdoor 305m",
       price: 37771.00,
-      originalPrice: null,
+      originalPrice: undefined,
       image: "/assets/lan-cat5e-reel.jpg",
       rating: 4.9,
       reviews: 234,
-      discount: null,
-      badge: "สินค้าแนะนำ"
     },
     {
       id: 4,
       name: "US-9035 CAT 5E UTP Cable Indoor 305m",
       price: 6094.00,
-      originalPrice: null,
+      originalPrice: undefined,
       image: "/assets/lan-cat5e-box.jpg",
       rating: 4.7,
       reviews: 178,
-      discount: null,
-      badge: "สินค้าแนะนำ"
     },
     {
       id: 5,
       name: "US-9045 CAT 5E UTP Cable Plenum 305m",
       price: 5896.00,
-      originalPrice: null,
+      originalPrice: undefined,
       image: "/assets/lan-cat5e-plenum.jpg",
       rating: 4.5,
       reviews: 123,
-      discount: null,
-      badge: null
     },
     {
       id: 6,
       name: "US-9015M CAT 5E UTP Cable Premium 305m",
       price: 6420.00,
-      originalPrice: null,
+      originalPrice: undefined,
       image: "/assets/lan-cat5e-premium.jpg",
       rating: 4.6,
       reviews: 145,
-      discount: null,
-      isClearanceSale: false,
-      badge: "InterlinkMall"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header onCartClick={() => setIsCartOpen(true)} cartItemCount={cartItemCount} />
-      
+    <div className="bg-background">
       <div className="container mx-auto px-2 sm:px-4 py-6">
         {/* Breadcrumb */}
         <nav className="text-sm text-muted-foreground mb-4">
@@ -201,15 +178,11 @@ export default function ProductListingPage() {
                   name={product.name}
                   price={product.price}
                   originalPrice={product.originalPrice}
-                  discount={product.discount as number | undefined}
                   rating={product.rating}
                   reviews={product.reviews}
                   image={product.image}
-                  isFreeShipping={product.isFreeShipping}
-                  isInterlinkMall={product.isInterlinkMall}
-                  isClearanceSale={product.isClearanceSale}
                   viewMode={viewMode}
-                  onAddToCart={() => setIsCartOpen(true)}
+                  onAddToCart={() => {}}
                 />
               ))}
             </div>
@@ -262,10 +235,6 @@ export default function ProductListingPage() {
           </div>
         </div>
       </div>
-
-      <Footer />
-      <ShoppingCart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-      <MessageChat />
     </div>
   );
 }

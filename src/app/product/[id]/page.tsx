@@ -11,10 +11,6 @@ import { Separator } from "@/components/ui/separator";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
-import { ShoppingCart } from "@/components/shopping-cart";
-import { MessageChat } from "@/components/message-chat";
 
 // Mock product data (in a real app, this would be fetched from an API using the id)
 const mockProduct = {
@@ -61,7 +57,6 @@ export default function ProductDetailPage() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [isLiked, setIsLiked] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [showZoom, setShowZoom] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
   const [selectedColor, setSelectedColor] = useState("Silver");
@@ -101,9 +96,7 @@ export default function ProductDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header onCartClick={() => setIsCartOpen(true)} />
-      
+    <div className="bg-background">
       <div className="container mx-auto px-4 py-8 max-w-full overflow-hidden">
         {/* Breadcrumb */}
         <nav className="text-sm text-muted-foreground mb-8 overflow-hidden">
@@ -369,7 +362,7 @@ export default function ProductDetailPage() {
                 <Button 
                   size="lg" 
                   className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
-                  onClick={() => setIsCartOpen(true)}
+                  onClick={() => {}}
                 >
                   Add to Cart
                 </Button>
@@ -475,10 +468,6 @@ export default function ProductDetailPage() {
           </TabsContent>
         </Tabs>
       </div>
-
-      <Footer />
-      <ShoppingCart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-      <MessageChat />
     </div>
   );
 }
