@@ -276,3 +276,27 @@ export async function fetchPromotions() {
     throw new Error('Failed to fetch promotions data.');
   }
 }
+
+export async function fetchSiteSetting(key: string) {
+  noStore();
+  try {
+    const setting = await prisma.site_settings.findUnique({
+      where: {
+        key: key,
+      },
+      select: {
+        value: true,
+      },
+    });
+
+    if (!setting) {
+      console.warn(`Site setting with key "${key}" not found.`);
+      return null;
+    }
+
+    return setting.value;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error(`Failed to fetch site setting for key: ${key}.`);
+  }
+}

@@ -1,84 +1,86 @@
-import { Facebook, Instagram, Twitter, Youtube, MapPin, Phone, Mail } from "lucide-react";
+'use client'; // This is now a Client Component
 
-export const Footer = () => {
+import React from 'react';
+import Link from 'next/link';
+import {
+  Facebook,
+  Instagram,
+  Twitter,
+  Youtube,
+  MapPin,
+  Phone,
+  Mail,
+  LucideProps,
+} from 'lucide-react';
+
+// --- Icon Mapper ---
+const iconMap: { [key: string]: React.FC<LucideProps> } = {
+  Facebook,
+  Instagram,
+  Twitter,
+  Youtube,
+  MapPin,
+  Phone,
+  Mail,
+};
+
+const DynamicIcon: React.FC<{ name: string; href?: string }> = ({ name, href }) => {
+  const IconComponent = iconMap[name];
+  if (!IconComponent) return null;
+
+  const iconClasses = `h-6 w-6 ${name === 'MapPin' ? 'mt-1 shrink-0 text-accent' : 'hover:text-accent cursor-pointer transition-colors duration-300 hover:scale-110'}`;
+  const icon = <IconComponent className={iconClasses} />;
+
+  if (href) {
+    return <Link href={href} passHref>{icon}</Link>;
+  }
+
+  return icon;
+};
+
+// --- The Recursive Renderer ---
+const renderNode = (node: any, index: number): React.ReactNode => {
+  if (typeof node === 'string') {
+    return node;
+  }
+  if (!node) return null;
+
+  if (node.tag === 'Icon') {
+    return <DynamicIcon key={index} {...node.props} />;
+  }
+
+  const { tag, props, children } = node;
+  const childrenNodes = children && Array.isArray(children) ? children.map(renderNode) : children;
+  
+  return React.createElement(tag, { ...props, key: index }, childrenNodes);
+};
+
+// --- Main Footer Component ---
+// It now receives layout data via props.
+export const Footer = ({ layout }: { layout: any }) => {
+  if (!layout || !layout.columns || !Array.isArray(layout.columns) || layout.columns.length === 0) {
+    return (
+      <footer className="bg-gradient-to-br from-secondary to-secondary/80 text-white pt-16 pb-8">
+        <div className="container mx-auto px-4 text-center">
+          <p>Footer content is not configured.</p>
+        </div>
+      </footer>
+    );
+  }
+  
+  const gridCols = `repeat(${layout.columns.length}, minmax(0, 1fr))`;
+
   return (
     <footer className="bg-gradient-to-br from-secondary to-secondary/80 text-white pt-16 pb-8">
       <div className="container mx-auto px-4">
-        {/* Main footer content */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-          {/* Company info */}
-          <div>
-            <div className="text-white font-bold text-2xl mb-4 flex items-center gap-2">
-              <img 
-                src="/lovable-uploads/445c1f0e-86bc-45a1-a47c-fe9bd739d132.png" 
-                alt="Interlink Logo" 
-                className="h-8 w-auto"
-              />
-              Interlink Shop
-            </div>
-            <p className="text-white/80 mb-6 leading-relaxed">
-              ผู้จำหน่ายอุปกรณ์เครือข่ายชั้นนำของไทย พร้อมให้บริการลูกค้าด้วยสินค้าคุณภาพสูง
-            </p>
-            <div className="flex gap-4">
-              <Facebook className="h-6 w-6 hover:text-accent cursor-pointer transition-colors duration-300 hover:scale-110" />
-              <Instagram className="h-6 w-6 hover:text-accent cursor-pointer transition-colors duration-300 hover:scale-110" />
-              <Twitter className="h-6 w-6 hover:text-accent cursor-pointer transition-colors duration-300 hover:scale-110" />
-              <Youtube className="h-6 w-6 hover:text-accent cursor-pointer transition-colors duration-300 hover:scale-110" />
-            </div>
-          </div>
-
-          {/* Customer service */}
-          <div>
-            <h3 className="font-semibold mb-6 text-white text-lg">ฝ่ายบริการลูกค้า</h3>
-            <ul className="space-y-3 text-sm">
-              <li><a href="#" className="hover:text-accent transition-colors duration-300 text-white/80 hover:text-white">ศูนย์ช่วยเหลือ</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors duration-300 text-white/80 hover:text-white">วิธีการซื้อ</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors duration-300 text-white/80 hover:text-white">การชำระเงิน</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors duration-300 text-white/80 hover:text-white">ข้อกำหนดและเงื่อนไข</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors duration-300 text-white/80 hover:text-white">นโยบายความเป็นส่วนตัว</a></li>
-            </ul>
-          </div>
-
-          {/* About us */}
-          <div>
-            <h3 className="font-semibold mb-6 text-white text-lg">เกี่ยวกับเรา</h3>
-            <ul className="space-y-3 text-sm">
-              <li><a href="#" className="hover:text-accent transition-colors duration-300 text-white/80 hover:text-white">เกี่ยวกับ Interlink</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors duration-300 text-white/80 hover:text-white">งานกับเรา</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors duration-300 text-white/80 hover:text-white">ข่าวสาร</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors duration-300 text-white/80 hover:text-white">บทความเทคนิค</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors duration-300 text-white/80 hover:text-white">ติดต่อเรา</a></li>
-            </ul>
-          </div>
-
-          {/* Contact & Hours */}
-          <div>
-            <h3 className="font-semibold mb-6 text-white text-lg">ติดต่อเรา</h3>
-            <ul className="space-y-4 text-sm text-white/80">
-              <li className="flex items-start gap-3">
-                <MapPin className="h-4 w-4 mt-1 shrink-0 text-accent" />
-                <span>123/45 ถนนรัชดาภิเษก แขวงห้วยขวาง เขตห้วยขวาง กรุงเทพฯ 10310</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone className="h-4 w-4 shrink-0 text-accent" />
-                <span>02-123-4567</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Mail className="h-4 w-4 shrink-0 text-accent" />
-                <span>info@interlink.co.th</span>
-              </li>
-            </ul>
-
-            <h3 className="font-semibold mt-8 mb-4 text-white text-lg">เวลาทำการ</h3>
-            <ul className="space-y-2 text-sm text-white/80">
-              <li>จันทร์ - ศุกร์: 9:00 - 18:00</li>
-              <li>เสาร์: 9:00 - 16:00</li>
-              <li>อาทิตย์: ปิด</li>
-            </ul>
-          </div>
+        <div
+          className="grid gap-8 mb-12"
+          style={{ gridTemplateColumns: gridCols }}
+        >
+          {layout.columns.map((column: any, index: number) => renderNode(column, index))}
         </div>
 
-        {/* Bottom footer */}
+        {/* Static Bottom Bar */}
         <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
           <div className="mb-4 md:mb-0 text-white/80">
             © 2024 Interlink Shop สงวนลิขสิทธิ์

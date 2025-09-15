@@ -1,14 +1,11 @@
-'use client';
-
-import { useState } from 'react';
 import type { Metadata } from "next";
 import { Sarabun } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
-import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { ShoppingCart } from "@/components/shopping-cart";
 import { MessageChat } from '@/components/message-chat';
+import { fetchSiteSetting } from '@/lib/data';
+import { InteractiveHeader } from "@/components/interactive-header"; // Import the new wrapper
 
 const sarabun = Sarabun({
   variable: "--font-sarabun",
@@ -16,35 +13,35 @@ const sarabun = Sarabun({
   subsets: ["latin", "thai"],
 });
 
-// Metadata can still be exported from a client component layout
-// export const metadata: Metadata = {
-//   title: "ilink-shop",
-//   description: "Interlink Shop - Your one-stop shop for networking equipment.",
-//   icons: {
-//     icon: "/favicon.svg",
-//   },
-// };
+export const metadata: Metadata = {
+  title: "ilink-shop",
+  description: "Interlink Shop - Your one-stop shop for networking equipment.",
+  icons: {
+    icon: "/favicon.svg",
+  },
+};
 
-export default function RootLayout({
+// This is a Server Component
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  
-  // Mock cart items count - in real app this would come from a global state
-  const cartItemCount = 4;
+
+  // Fetching data on the server
+  const footerLayout = await fetchSiteSetting('footer_layout');
 
   return (
     <html lang="en">
       <body className={`${sarabun.variable} font-sans antialiased`}>
         <Providers>
           <div className="min-h-screen bg-background flex flex-col">
-            <Header onCartClick={() => setIsCartOpen(true)} cartItemCount={cartItemCount} />
+            {/* The new InteractiveHeader handles its own state */}
+            <InteractiveHeader />
             <main className="flex-grow">{children}</main>
-            <Footer />
+            {/* Passing the fetched data to the Footer Client Component */}
+            <Footer layout={footerLayout} />
           </div>
-          <ShoppingCart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
           <MessageChat />
         </Providers>
       </body>
